@@ -19,7 +19,7 @@ public class CurrencyConverterTest {
 
 		var actualResult = converter.convert(BigDecimal.ZERO, "USD", "EUR");
 
-		assertEquals(BigDecimal.ZERO, actualResult);
+		assertBigDecimalEquals(BigDecimal.ZERO, actualResult);
 	}
 
 	@ParameterizedTest
@@ -30,7 +30,7 @@ public class CurrencyConverterTest {
 
 		var actualResult = converter.convert(value, "USD", "EUR");
 
-		assertEquals(expectedResullt, actualResult);
+		assertBigDecimalEquals(expectedResullt, actualResult);
 	}
 
 	@ParameterizedTest
@@ -41,13 +41,8 @@ public class CurrencyConverterTest {
 
 		var actualResult = converter.convert(value, "EUR", "USD");
 
-		assertEquals(expectedResullt, actualResult);
-	}
-
-	private void assertEquals(BigDecimal expectedResullt, BigDecimal actualResult) {
-		var isEquals = expectedResullt.compareTo(actualResult);
-		assertEquals(0, isEquals);
-	}
+		assertBigDecimalEquals(expectedResullt, actualResult);
+	}	
 
 	@ParameterizedTest
 	@CsvSource({ "USD,RUB" })
@@ -71,6 +66,11 @@ public class CurrencyConverterTest {
 
 		var actualValue = converter.convert(value, fromCurrency, toCurrency);
 
-		assertEquals(expectedValue, actualValue);
+		assertBigDecimalEquals(expectedValue, actualValue);
+	}
+	
+	private static void assertBigDecimalEquals(BigDecimal expectedResullt, BigDecimal actualResult) {
+		var isEquals = expectedResullt.compareTo(actualResult);
+		assertEquals(0, isEquals);
 	}
 }
