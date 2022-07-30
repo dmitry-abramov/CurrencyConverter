@@ -1,11 +1,12 @@
 package com.currencyconverter.com.currencyconverter.maven;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 public class CurrencyConverter {
-	private HashMap<String, Double> rates = new HashMap<String, Double>(){{
-	    put("USDEUR", 0.98);
-	    put("EURUSD", 1.02);
+	private HashMap<String, BigDecimal> rates = new HashMap<String, BigDecimal>(){{
+	    put("USDEUR", new BigDecimal("0.98"));
+	    put("EURUSD", new BigDecimal("1.02"));
 	}};
 	
 	/**
@@ -16,7 +17,7 @@ public class CurrencyConverter {
      * @param toCurrency currency to convert
 	 * @throws CurrencyConverterException 
      */
-	public double convert(double value, String fromCurrency, String toCurrency) 
+	public BigDecimal convert(BigDecimal value, String fromCurrency, String toCurrency) 
 			throws CurrencyConverterException {
 		var rateKey = (fromCurrency + toCurrency).toUpperCase();
 		
@@ -25,6 +26,6 @@ public class CurrencyConverter {
 		}
 		
 		var rate = rates.get(rateKey);		
-		return value * rate;
+		return value.multiply(rate);
 	}
 }

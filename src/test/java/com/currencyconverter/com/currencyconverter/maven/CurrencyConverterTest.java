@@ -1,6 +1,9 @@
 package com.currencyconverter.com.currencyconverter.maven;
 
 import static org.junit.Assert.*;
+
+import java.math.BigDecimal;
+
 import org.junit.*;
 
 import org.junit.Test;
@@ -14,31 +17,36 @@ public class CurrencyConverterTest {
 	public void convert_zeroUsdToEur_returnsZero() throws CurrencyConverterException {
 		CurrencyConverter converter = new CurrencyConverter();
 
-		var actualResult = converter.convert(0, "USD", "EUR");
+		var actualResult = converter.convert(BigDecimal.ZERO, "USD", "EUR");
 
-		assertEquals(0, actualResult, 0.001);
+		assertEquals(BigDecimal.ZERO, actualResult);
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "0, 0", "1, 0.98", "2, 1.96" })
-	public void convert_usdToEur_returnsConvertedValue(double value, double expectedResullt)
+	public void convert_usdToEur_returnsConvertedValue(BigDecimal value, BigDecimal expectedResullt)
 			throws CurrencyConverterException {
 		CurrencyConverter converter = new CurrencyConverter();
 
 		var actualResult = converter.convert(value, "USD", "EUR");
 
-		assertEquals(expectedResullt, actualResult, 0.001);
+		assertEquals(expectedResullt, actualResult);
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "0, 0", "1, 1.02", "2, 2.04" })
-	public void convert_eurToUsd_returnsConvertedValue(double value, double expectedResullt)
+	public void convert_eurToUsd_returnsConvertedValue(BigDecimal value, BigDecimal expectedResullt)
 			throws CurrencyConverterException {
 		CurrencyConverter converter = new CurrencyConverter();
 
 		var actualResult = converter.convert(value, "EUR", "USD");
 
-		assertEquals(expectedResullt, actualResult, 0.001);
+		assertEquals(expectedResullt, actualResult);
+	}
+
+	private void assertEquals(BigDecimal expectedResullt, BigDecimal actualResult) {
+		var isEquals = expectedResullt.compareTo(actualResult);
+		assertEquals(0, isEquals);
 	}
 
 	@ParameterizedTest
@@ -48,7 +56,7 @@ public class CurrencyConverterTest {
 		CurrencyConverter converter = new CurrencyConverter();
 
 		var actualException = Assertions.assertThrows(CurrencyConverterException.class, () -> {
-			converter.convert(0, fromCurrency, toCurrency);
+			converter.convert(BigDecimal.ZERO, fromCurrency, toCurrency);
 		});
 
 		assertEquals("There is no rate for pair " + fromCurrency + " - " + toCurrency,
@@ -57,12 +65,12 @@ public class CurrencyConverterTest {
 
 	@ParameterizedTest
 	@CsvSource({ "1,usd,eur,0.98","1,EuR,uSd,1.02" })
-	public void convert_currencyInDifferentCases_converteSuccessfully(double value, String fromCurrency,
-			String toCurrency, double expectedValue) throws CurrencyConverterException {
+	public void convert_currencyInDifferentCases_converteSuccessfully(BigDecimal value, String fromCurrency,
+			String toCurrency, BigDecimal expectedValue) throws CurrencyConverterException {
 		CurrencyConverter converter = new CurrencyConverter();
 
 		var actualValue = converter.convert(value, fromCurrency, toCurrency);
 
-		assertEquals(expectedValue, actualValue, 0.001);
+		assertEquals(expectedValue, actualValue);
 	}
 }
