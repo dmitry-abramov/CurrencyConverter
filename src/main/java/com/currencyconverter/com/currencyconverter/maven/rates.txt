@@ -1,0 +1,2 @@
+EUR,USD,not a number
+USD,EUR,0.90

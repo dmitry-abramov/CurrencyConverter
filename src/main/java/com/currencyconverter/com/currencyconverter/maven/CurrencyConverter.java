@@ -4,10 +4,15 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 
 public class CurrencyConverter {
-	private HashMap<String, BigDecimal> rates = new HashMap<String, BigDecimal>(){{
-	    put("USDEUR", new BigDecimal("0.98"));
-	    put("EURUSD", new BigDecimal("1.02"));
-	}};
+	private RateProvider rateProvider;
+	
+	public CurrencyConverter(RateProvider rateProvider) {
+		if (rateProvider == null) {
+			throw new IllegalArgumentException("rateProvider parameter shouldn't be null");
+		}
+		
+		this.rateProvider = rateProvider;
+	}
 	
 	/**
      * Converts value from <code>fromCurrency<code> currency to <code>toCurrency<code>.
@@ -15,17 +20,11 @@ public class CurrencyConverter {
      * @param value value to convert
      * @param fromCurrency original currency
      * @param toCurrency currency to convert
-	 * @throws CurrencyConverterException 
+	 * @throws CurrencyConvertionException 
      */
 	public BigDecimal convert(BigDecimal value, String fromCurrency, String toCurrency) 
-			throws CurrencyConverterException {
-		var rateKey = (fromCurrency + toCurrency).toUpperCase();
-		
-		if (!rates.containsKey(rateKey)) {
-			throw new CurrencyConverterException("There is no rate for pair " + fromCurrency + " - " + toCurrency);
-		}
-		
-		var rate = rates.get(rateKey);		
+			throws CurrencyConvertionException {
+		var rate = this.rateProvider.getRate(fromCurrency, toCurrency);		
 		return value.multiply(rate);
 	}
 }
