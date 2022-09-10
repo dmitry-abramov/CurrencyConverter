@@ -1,4 +1,4 @@
-package com.currencyconverter.com.currencyconverter.maven;
+package com.currencyconverter;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

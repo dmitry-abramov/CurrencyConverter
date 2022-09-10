@@ -1,0 +1,2 @@
+EUR,USD,1.10
+USD,EUR,0.90

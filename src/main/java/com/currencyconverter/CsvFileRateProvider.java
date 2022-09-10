@@ -1,7 +1,8 @@
-package com.currencyconverter.com.currencyconverter.maven;
+package com.currencyconverter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
@@ -9,7 +10,11 @@ public class CsvFileRateProvider implements RateProvider {
 
 	public BigDecimal getRate(String fromCurrency, String toCurrency) throws CurrencyConvertionException {
 		try {
-			File file = new File("C:\\Users\\Dmitry\\CurrencyConverter-workspace\\com.currencyconverter.maven\\src\\main\\java\\com\\currencyconverter\\com\\currencyconverter\\maven\\rates.txt");
+			InputStream file = CsvFileRateProvider.class.getResourceAsStream("/rates.txt");
+			if (file == null) {
+				throw new CurrencyConvertionException("File with rates is not found.");
+			}
+			
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNextLine()) {
 				// from, to, rate
@@ -27,9 +32,7 @@ public class CsvFileRateProvider implements RateProvider {
 			}
 			
 			scanner.close();
-			throw new CurrencyConvertionException("There is no rate for pair " + fromCurrency + " - " + toCurrency);
-		} catch (FileNotFoundException e) {
-			throw new CurrencyConvertionException("File with rates is not found.", e);
+			throw new CurrencyConvertionException("There is no rate for pair " + fromCurrency + " - " + toCurrency);		
 		} catch (NumberFormatException e) {
 			throw new CurrencyConvertionException("Error during read file with rates: " + e.getMessage(), e);
 		}
