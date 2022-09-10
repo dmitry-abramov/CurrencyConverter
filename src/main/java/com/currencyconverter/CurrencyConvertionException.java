@@ -1,4 +1,4 @@
-package com.currencyconverter.com.currencyconverter.maven;
+package com.currencyconverter;
 
 public class CurrencyConvertionException extends Exception {
 	public CurrencyConvertionException() {
