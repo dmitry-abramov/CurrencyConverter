@@ -12,13 +12,11 @@ public class CsvFileRateProvider implements RateProvider {
 		try {
 			InputStream file = CsvFileRateProvider.class.getResourceAsStream("/rates.txt");
 			if (file == null) {
-				throw new CurrencyConvertionRuntimeException("File with rates is not found.");
+				throw new CurrencyConvertionRuntimeException("File with rates was not found.");
 			}
 			
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNextLine()) {
-				// from, to, rate
-				// USD,EUR,0.90
 				String row = scanner.nextLine();
 				String[] parts = row.split(",");
 				String from = parts[0];
