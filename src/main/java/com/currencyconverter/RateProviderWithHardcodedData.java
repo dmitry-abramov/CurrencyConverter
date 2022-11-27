@@ -3,7 +3,6 @@ package com.currencyconverter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-// class with hardcoded currency rates
 public class RateProviderWithHardcodedData implements RateProvider {
 	private HashMap<String, BigDecimal> rates = new HashMap<String, BigDecimal>(){{
 	    put("USDEUR", new BigDecimal("0.98"));
