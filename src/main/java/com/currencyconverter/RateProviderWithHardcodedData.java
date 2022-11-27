@@ -9,11 +9,11 @@ public class RateProviderWithHardcodedData implements RateProvider {
 	    put("EURUSD", new BigDecimal("1.02"));
 	}};
 
-	public BigDecimal getRate(String fromCurrency, String toCurrency) throws CurrencyConvertionException {
+	public BigDecimal getRate(String fromCurrency, String toCurrency) throws CurrencyConvertionRuntimeException {
         var rateKey = (fromCurrency + toCurrency).toUpperCase();
 		
 		if (!rates.containsKey(rateKey)) {
-			throw new CurrencyConvertionException("There is no rate for pair " + fromCurrency + " - " + toCurrency);
+			throw new CurrencyConvertionRuntimeException("There is no rate for pair " + fromCurrency + " - " + toCurrency);
 		}
 		
 		return rates.get(rateKey);

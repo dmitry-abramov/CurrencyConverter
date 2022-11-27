@@ -24,7 +24,7 @@ public class CurrencyConverterRestController {
 					new CurrencyConvertionResult(fromCurrency, toCurrency, convertedValue);
 			
 			return result;
-		} catch (CurrencyConvertionException e) {
+		} catch (CurrencyConvertionRuntimeException e) {
 			CurrencyConvertionResult result = new CurrencyConvertionResult(e.getMessage());
 			
 			return result;

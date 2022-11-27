@@ -8,11 +8,11 @@ import java.util.Scanner;
 
 public class CsvFileRateProvider implements RateProvider {
 
-	public BigDecimal getRate(String fromCurrency, String toCurrency) throws CurrencyConvertionException {
+	public BigDecimal getRate(String fromCurrency, String toCurrency) throws CurrencyConvertionRuntimeException {
 		try {
 			InputStream file = CsvFileRateProvider.class.getResourceAsStream("/rates.txt");
 			if (file == null) {
-				throw new CurrencyConvertionException("File with rates is not found.");
+				throw new CurrencyConvertionRuntimeException("File with rates is not found.");
 			}
 			
 			Scanner scanner = new Scanner(file);
@@ -32,9 +32,9 @@ public class CsvFileRateProvider implements RateProvider {
 			}
 			
 			scanner.close();
-			throw new CurrencyConvertionException("There is no rate for pair " + fromCurrency + " - " + toCurrency);		
+			throw new CurrencyConvertionRuntimeException("There is no rate for pair " + fromCurrency + " - " + toCurrency);		
 		} catch (NumberFormatException e) {
-			throw new CurrencyConvertionException("Error during read file with rates: " + e.getMessage(), e);
+			throw new CurrencyConvertionRuntimeException("Error during read file with rates: " + e.getMessage(), e);
 		}
 	}
 }

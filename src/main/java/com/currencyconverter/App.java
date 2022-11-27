@@ -57,7 +57,7 @@ public class App {
 		} catch (ParseException e) {
 			HelpFormatter formatter = new HelpFormatter();
 			formatter.printHelp("currencyConverter", options);
-		} catch (CurrencyConvertionException e) {
+		} catch (CurrencyConvertionRuntimeException e) {
 			System.out.println(e.getMessage());
 		}		
 	}

@@ -20,10 +20,10 @@ public class CurrencyConverter {
      * @param value value to convert
      * @param fromCurrency original currency
      * @param toCurrency currency to convert
-	 * @throws CurrencyConvertionException 
+	 * @throws CurrencyConvertionRuntimeException 
      */
 	public BigDecimal convert(BigDecimal value, String fromCurrency, String toCurrency) 
-			throws CurrencyConvertionException {
+			throws CurrencyConvertionRuntimeException {
 		var rate = this.rateProvider.getRate(fromCurrency, toCurrency);		
 		return value.multiply(rate);
 	}
