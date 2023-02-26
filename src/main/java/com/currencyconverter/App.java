@@ -50,7 +50,7 @@ public class App {
 			var value = new BigDecimal(cmd.getParsedOptionValue("v").toString());
 			var fromCurrency = cmd.getParsedOptionValue("f").toString();
 			var toCurrency = cmd.getParsedOptionValue("t").toString();				
-			var currencyConverter = new CurrencyConverter(new CsvFileRateProvider());
+			var currencyConverter = new CurrencyConverter(new GoogleRateProvider());
 			
 			var convertedValue = currencyConverter.convert(value, fromCurrency, toCurrency);
 			System.out.println(value + fromCurrency + " = " + convertedValue + toCurrency);			
